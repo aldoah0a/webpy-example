@@ -2,7 +2,15 @@
 
 This is an example of configuring webpy under Debian / Ubuntu. I wrote it
 trying to figure out web.py and stubbed my toe so often that I hoped to help
-others out there avoid the problems I had.
+others out there avoid the problems I had. This app provides examples of the
+following things:
+
+  o Templates and form handling
+  o Database of user accounts
+  o Session management using database backend
+  o Authentication using application sessions, HTTP Basic and OAuth
+  o REST interface implementation examples with a commandline client
+  o User account management
 
 I do my development on Debian Squeeze and Unstable, but I am fairly confident
 that recent (Spring 2011) Ubuntu releases should work as well. To install
