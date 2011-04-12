@@ -1,0 +1,56 @@
+                             WEBPY-EXAMPLE
+
+This is an example of configuring webpy under Debian / Ubuntu. I wrote it
+trying to figure out web.py and stubbed my toe so often that I hoped to help
+others out there avoid the problems I had.
+
+I do my development on Debian Squeeze and Unstable, but I am fairly confident
+that recent (Spring 2011) Ubuntu releases should work as well. To install
+this in a semi-automated way, run these commands or ones like them from the
+root of the source tree:
+
+  $ sudo dpkg -i dependencies/*.deb
+  $ sudo apt-get -f install
+  $ dpkg-buildpackage -rfakeroot -tc -b
+  $ sudo dpkg -i ../*.deb
+  $ sudo apt-get -f install
+
+At this point, if I haven't messed something up, you should be able to go to:
+
+  http://localhost/webpy-example/
+
+...and drive the app around. Here is some other general information
+
+  o The app is built to run with Apache 2.2 and Postgresql (8.4 or 9.0)
+  o The administrative account is 'admin' and the password is 'admin'
+  o You can get all the logs from the scripts by running:
+    sudo tail -f /var/log/apache2/access.log /var/log/apache2/error.log
+  o It is easier to just chown /usr/share/webpy-example and play around
+    in there, rather than building a package to test changes.
+  o You can also update /etc/apache2/conf.d/webpy-example to point to your
+    checked out directory, but you have to copy over the credentials.py from
+    the installed directory.
+  o The database schema is in pgsql.sql and will be created automatically
+    via dbconfig-common automation. One issue is that if you re-install the
+    package, you should purge (dpkg --purge webpy-example) first and when
+    reinstalling select to use the package maintainers version of the
+    configuration file when prompted.
+
+If you find any bugs, have any suggestions or patches, please use this:
+
+  https://github.com/DaGoodBoy/webpy-example
+
+If you need help, my first suggestion is to stick with it and read the code,
+use the web.py docs (http://webpy.org/docs/0.3/api) and if you still can't
+figure it out, try the issue reports / message boards / mailing lists for
+web.py and other associated code:
+
+  o Web.py: http://groups.google.com/group/webpy/
+  o OAuth: https://github.com/simplegeo/python-oauth2
+  o passlib: http://packages.python.org/passlib/
+  o mimerender: http://code.google.com/p/mimerender/
+
+I am usually pretty busy, but I can sometimes answer questions if you are
+prepared to wait until I find some spare time.
+
+# End

@@ -1,0 +1,7 @@
+webpy-example for Debian
+------------------
+
+An example site using web.py features like templates, sub-apps, forms,
+sessions and authentication.
+
+ -- Anthony Awtrey <tony@awtrey.com>, Wed,  2 Mar 2011 14:13:00 -0500

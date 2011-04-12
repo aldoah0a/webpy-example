@@ -1,0 +1,65 @@
+#!/usr/bin/python
+
+import sys
+import getopt
+import string
+
+sys.path.append( 'lib' )
+
+import account
+
+FIELD_WIDTH = 20
+
+def parse_cmdline(argv):
+
+  usage = """\
+USAGE: account-create [OPTIONS] username password
+Available Options
+  -h [ --help ]      Print this message
+"""
+
+  shortOpts = "h"
+  longOpts = ['help']
+  opts = ()
+  args = ()
+
+  account_info = {}
+  account_info['username'] = False
+  account_info['password'] = False
+
+  try:
+    opts,args = getopt.gnu_getopt(argv,shortOpts,longOpts)
+  except getopt.GetoptError:
+    sys.stderr.write(usage)
+    sys.exit(1)
+
+  for opt, val in opts:
+    if opt in ('-h','--help'):
+      sys.stdout.write(usage)
+      sys.exit(0)
+
+  if len(args) != 2:
+    sys.stderr.write("ERROR! Please specify a username password\n")
+    sys.stderr.write(usage)
+    sys.exit(0)
+
+  account_info['username'] = args[0]
+  account_info['password'] = args[1]
+
+  return (account_info)
+
+if __name__ == "__main__":
+
+  account_info = parse_cmdline(sys.argv[1:])
+  json = account.create_account( account_info )
+  if json['status'] == 'success':
+    print 'New account created'
+    headers = json['account'].keys()
+    headers.remove('id')
+    headers.insert(0, 'id')
+    for h in headers:
+      print "  %s: %s" % ( string.capwords(h.replace('_',' ')).ljust( FIELD_WIDTH ), json['account'][h] )
+  else:
+    print "Error: %s" % json['message']
+
+# End

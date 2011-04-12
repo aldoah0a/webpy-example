@@ -1,0 +1,27 @@
+$def with ( kwargs )
+$var title:Login
+
+$if kwargs['status'] == 'error':
+  <p>
+    <b>Error:</b> $kwargs['message']
+  </p>
+$else:
+  <p>
+    $kwargs['message']
+  </p>
+
+$if kwargs.has_key('form'):
+  <form method="POST">
+    $:kwargs['form'].render()
+  </form>
+
+$if kwargs.has_key('account'):
+  <p>Review the account information.</p>
+  <p>
+    <b>Username:</b> $kwargs['account'].username<br />
+  </p>
+  <p>
+    [<a href="../account/">Return to Account Listing</a>]
+    [<a href="../account/update/$kwargs['account'].username">Update Account Info</a>]
+  </p>
+

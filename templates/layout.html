@@ -1,0 +1,123 @@
+$def with (content)
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd"> 
+<?xml version="1.0" encoding="UTF-8"?> 
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"> 
+<head> 
+  <title>$content.title</title> 
+ 
+  <meta http-equiv="content-type" content="text/html; charset=utf-8" /> 
+ 
+  <meta name="description" content="Template page" /> 
+  <meta name="author" content="Anthony Awtrey" /> 
+  <meta name="editor" content="vi" /> 
+
+  <link rel="shortcut icon" href="/webpy-example/favicon.ico" type="image/x-icon" /> 
+
+  <style type="text/css"> 
+<!--
+ 
+/* General tag defaults */
+:focus,:active { outline: 0 } /* remove the dotted line box around clicked regions */
+body { color: #404040; margin:0px; padding:0px; font-family: arial, helvetica, sans-serif; font-size: 100%; line-height: 1.125em; }
+p  { margin: 0 0 0.5em 0; padding: 0; font-size: 0.875em; }
+li { font-size: 0.875em; }
+ol { list-style-position: inside; }
+ul { list-style-position: inside; }
+h1 { margin-bottom: 0.25ex; line-height: 1.125em; color: #000000; }
+h2 { margin-bottom: 0.25ex; line-height: 1.125em; color: #000000; }
+h3 { margin-bottom: 0.25ex; line-height: 1.125em; color: #000000; }
+h4 { margin-bottom: 0.25ex; line-height: 1.125em; color: #000000; }
+a:link    { text-decoration: none; color: #436EEE; }
+a:visited { text-decoration: none; color: #304A95; }
+a:active  { text-decoration: none; color: #436EEE; }
+a:hover   { text-decoration: underline; color: #304A95; }
+a img { border: 0; }
+sup { font-size: 0.6em; }
+input { font-size: 0.9em; }
+blockquote{ border: 1px solid #F0F0F0; margin: 0px 0px 10px 0px; padding: 5px 5px 5px 5px; }
+table, td, th { font-family: arial, helvetica, sans-serif; }
+dl { margin: 0px; padding 0px; font-family: arial, helvetica, sans-serif; }
+dt { float: left; clear: left; width: 180px; text-align: left; font-style: italic; }
+dt:after { content: ":"; }
+dd { margin: 0 0 0 190px; padding: 0 0 0.5em 0; }
+ 
+/* Main wrap */
+#wrap { color: #404040; width: 850px; margin: 0px auto; padding: 0; }
+#logo { float: left; margin: 50px 0px 10px 0px; }
+ 
+/* Content */
+#content { width: 850px; float: right; text-align: left; margin: 10px 0 10px 0; padding: 0; }
+#content p b { color: #404040; }
+ 
+/* Footer */
+#footer { clear: both; text-align: center; color: #404040; margin: 0 auto; padding: 8px 0 }
+#footer p { font-size: 0.9em; }
+#footer a { color: #404040; }
+#footer a.dim { color:  #404040 }
+ 
+/* Other classes */
+ 
+.center { width: auto; text-align: center; }
+.left { width: auto; float: left; }
+.right { width: auto; text-align: right; }
+.leftm { float: left; margin: 0 15px 4px 0; }
+.rightm { float: right; margin: 0 0 4px 15px; }
+.vcenter { display: table-cell; vertical-align: middle }
+ 
+.comment { margin:0 0 0 0; padding: 0 0 0 1.5em; width: auto; background: #F6F6F6; }
+.comment .left  { width: auto; float: left; }
+.comment .right { width: auto; text-align: right; }
+ 
+.form { width: auto; padding: 5px 0 10px 0; border-style:dotted; border-color:#C0C0C0; border-width:1px; background: #f0f0f0; }
+.row { width: auto; padding: 5px 0 0 0; }
+.row .left { width: 150px; float: left; text-align: right; }
+.row .right { width: auto; margin-left: 20px; text-align: right; }
+ 
+table.pretty { border-style:dotted; border-color:#C0C0C0; border-width:1px; font-family: arial, helvetica, sans-serif; }
+th.pretty { background-color: #e0e0e0; font-family: arial, helvetica, sans-serif; }
+td.pretty { font-family: arial, helvetica, sans-serif; }
+.odd { background-color: #f0f0f0; }
+.even { background-color: #ffffff; }
+
+.graybg { background: #F0F0F0; }
+.blackbg { background: #000000; }
+.box { background-color: #ffffff; border: 1px solid #c8c8c8; padding: 2px 5px 2px 8px; margin: 0 0 10px 0 }
+.quote { background-color: #f0f0f0; border: 1px solid #c8c8c8; padding: 2px 2px 2px 2px; margin: 0px 10px 0px 0px }
+.photo { border:1px solid #c0c0c0; padding:2px; background-color:#ffffff; margin:1px 1px 1px 1px; }
+.gray { color:  #A6A6A6 }
+.error { font-weight:bold; color: red }
+.small { font-size: small; }
+.little { font-size: smaller; }
+.clear { clear: both; }
+.hide { display: none; }
+.phone-label { font-style: italic; float: left; width: 180px}
+ 
+// -->
+  </style> 
+ 
+</head> 
+ 
+<body bgcolor="#FFFFFF" > 
+ 
+<div id="wrap"> 
+ 
+  <div id="logo"><a href="/webpy-example/"><img class="left" src="/webpy-example/static/webpy-example.png" alt="Webpy Example the Debian way!" /></a></div> 
+ 
+  </ul> 
+ 
+  <div id="content"> 
+
+  <h1>$:content.title</h1>
+
+  $:content
+ 
+  </div> 
+  <div id="footer"> 
+    <p> 
+     <span class="tiny" style="font-size: 0.75em; color: #a0a0a0; letter-spacing: 0.2em;">&#169; 2011 Somebody something</span> 
+    </p> 
+  </div> 
+ 
+</div> 
+</body> 
+</html> 

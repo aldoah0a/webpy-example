@@ -1,0 +1,19 @@
+$def with ( kwargs )
+$var title:Review Account
+
+$if kwargs['status'] == 'error':
+  <p>
+    <b>Error:</b> $kwargs['message']
+  </p>
+
+$else:
+  <p>Review the account information.</p> 
+  <p> 
+    <b>Username:</b> $kwargs['account']['username']<br /> 
+    <b>Role:</b> $kwargs['account']['role']<br />
+  </p> 
+  <p> 
+    [<a href="../">Back</a>]
+    [<a href="../update/$kwargs['account']['username']">Update Account Info</a>]
+  </p> 
+

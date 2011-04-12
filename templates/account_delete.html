@@ -1,0 +1,20 @@
+$def with ( kwargs )
+$var title:Delete Account
+
+$if kwargs['status'] == 'error':
+  <p>
+    <b>Error:</b> $kwargs['message']
+  </p>
+$else:
+  <p>
+    $kwargs['message']
+  </p>
+
+$if kwargs.has_key('form'):
+  <form method="POST">
+    $:kwargs['form'].render()
+  </form>
+$else:
+  <p>
+    [<a href="../">Back</a>]
+  </p>

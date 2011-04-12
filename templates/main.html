@@ -1,0 +1,27 @@
+$var title:Webpy Example
+
+<p> 
+This is a simple webpy example site. It provides examples of the following:
+</p> 
+ 
+<ul> 
+ <li>Templates and form handling</li>
+ <li>Database of user accounts</li>
+ <li>Session management using database backend</li>
+ <li>Authentication using application sessions, HTTP Basic and OAuth</li>
+ <li>REST interface implementation examples with a commandline client</li>
+ <li>User account management</li>
+</ul> 
+
+<p> 
+$if session.has_key('username'):
+  Hello $session['username']!
+  $if session.has_key('role') and session['role'] == 'administrator':
+    [ <a href="account">Administer Accounts</a>]
+  $else:
+    [ <a href="account/review/$session['username']">Review Account</a>]
+  [ <a href="logout">Logout</a>]
+$else:
+  [ <a href="login">Login</a>]
+</p> 
+

@@ -1,0 +1,55 @@
+#!/usr/bin/python
+
+import sys
+import getopt
+
+sys.path.append( 'lib' )
+
+import account
+
+def parse_cmdline(argv):
+
+  usage = """\
+USAGE: account-delete [OPTIONS] username
+Available Options
+  -h [ --help ]      Print this message
+"""
+
+  shortOpts = "h"
+  longOpts = ['help']
+  opts = ()
+  args = ()
+
+  account_info = {}
+  account_info['username'] = False
+
+  try:
+    opts,args = getopt.gnu_getopt(argv,shortOpts,longOpts)
+  except getopt.GetoptError:
+    sys.stderr.write(usage)
+    sys.exit(1)
+
+  for opt, val in opts:
+    if opt in ('-h','--help'):
+      print usage
+      sys.exit(0)
+
+  if len(args) != 1:
+    sys.stderr.write("Error! please provide an account id\n")
+    sys.stderr.write(usage)
+    sys.exit(1)
+
+  account_info['username'] = args[0]
+
+  return (account_info)
+
+if __name__ == "__main__":
+
+  account_info = parse_cmdline(sys.argv[1:])
+  json = account.delete_account( account_info )
+  if json['status'] == 'success':
+    print 'Account %s deleted successfully' % account_info['username']
+  else:
+    print 'Error: %s' % json['message']
+
+# End

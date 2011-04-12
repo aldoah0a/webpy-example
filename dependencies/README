@@ -1,0 +1,11 @@
+These are packages I've put together for Debian/Ubuntu systems. The code
+is largely unchanged from the upstream versions, but I did fix a bug in
+oauth2 reported here:
+
+  https://github.com/simplegeo/python-oauth2/pull/50
+
+To install the packages, just run:
+
+  $ sudo dpkg -i *.deb
+
+

@@ -1,0 +1,21 @@
+WSGIScriptAlias /webpy-example /usr/share/webpy-example/index.py
+WSGIPassAuthorization On
+
+Alias /webpy-example/robots.txt /usr/share/webpy-example/static/robots.txt
+Alias /webpy-example/favicon.ico /usr/share/webpy-example/static/favicon.ico
+
+Alias /webpy-example/static /usr/share/webpy-example/static
+<Directory /usr/share/webpy-example/static>
+  Options +Indexes
+</Directory>
+
+#<Directory /usr/share/webpy-example/>
+#  AuthType Basic
+#  AuthName "STRIKE Midas"
+#  AuthBasicProvider wsgi
+#  WSGIAuthUserScript /usr/share/webpy-example/auth.py
+#  Require valid-user
+#  WSGIAccessScript /usr/share/webpy-example/auth.py
+#  satisfy any
+#</Directory>
+

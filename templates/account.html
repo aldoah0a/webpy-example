@@ -1,0 +1,21 @@
+$def with ( kwargs )
+$var title:Account Management
+
+<table class="pretty" width="100%"> 
+  <tr class="pretty"> 
+    <th class="pretty">Username</th> 
+    <th class="pretty">&nbsp;</th> 
+    <th class="pretty">&nbsp;</th> 
+  </tr> 
+$for account in kwargs['accounts']:
+  <tr class="pretty $loop.parity"> 
+    <td><a href="review/$account['username']">$account['username']</a></td> 
+    <td><a href="update/$account['username']">Update Account Info</a></td> 
+    <td><a href="delete/$account['username']">Delete</a></td> 
+  </tr> 
+
+</table> 
+ 
+<p> 
+  <a href="create">Add Account</a> 
+</p>

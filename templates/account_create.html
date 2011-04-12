@@ -1,0 +1,13 @@
+$def with ( kwargs )
+$var title:Add Account
+
+$if kwargs['status'] == 'error':
+  <p>
+    <b>Error:</b> $kwargs['message']
+  </p>
+
+$if kwargs.has_key('form'):
+  <form method="POST">
+    $:kwargs['form'].render()
+  </form>
+

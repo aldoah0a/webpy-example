@@ -1,0 +1,17 @@
+Source: webpy-example
+Section: misc
+Priority: optional
+Maintainer: Anthony Awtrey <tony@awtrey.com>
+Build-Depends: debhelper (>= 4.0.0)
+Standards-Version: 3.6.1
+
+Package: webpy-example
+Architecture: any
+Pre-Depends: debconf
+Depends: apache2, libapache2-mod-wsgi, python2.6,
+ python-webpy, python-mimerender, python-magic, python-passlib, python-oauth2,
+ postgresql, dbconfig-common, python-psycopg2,
+ sudo, vim, ssh
+Description: Web.py example site
+ An example site using web.py features like templates, sub-apps, forms, sessions and authentication
+
