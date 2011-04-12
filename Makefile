@@ -2,7 +2,7 @@
 
 INSTALLFILES := $(shell find . \
                         \( \
-                        -path '.git' -prune -or \
+                        -path './.git' -prune -or \
                         -path './debian' -prune -or \
                         -path './dependencies' -prune -or \
                         -not -name '*.log' -and \
