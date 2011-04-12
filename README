@@ -32,9 +32,11 @@ At this point, if I haven't messed something up, you should be able to go to:
   o The app is built to run with Apache 2.2 and Postgresql (8.4 or 9.0)
   o The administrative account is 'admin' and the password is 'admin'
   o You can get all the logs from the scripts by running:
-    sudo tail -f /var/log/apache2/access.log /var/log/apache2/error.log
+      sudo tail -f /var/log/apache2/access.log /var/log/apache2/error.log
   o It is easier to just chown /usr/share/webpy-example and play around
-    in there, rather than building a package to test changes.
+    in there, rather than building a package to test changes. Don't
+    forget to reload Apache when you make code changes!
+      sudo /etc/init.d/apache2 reload
   o You can also update /etc/apache2/conf.d/webpy-example to point to your
     checked out directory, but you have to copy over the credentials.py from
     the installed directory.
