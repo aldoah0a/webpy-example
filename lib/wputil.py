@@ -97,7 +97,7 @@ class CustomEncoder(json.JSONEncoder):
   """
   def default(self, obj):
     if isinstance(obj, web.utils.Storage):
-      return [ 'Unserializable web form' ]
+      return [ 'Unserializable web storage' ]
     if isinstance(obj, web.form.Form):
       return [ 'Unserializable web form' ]
     return json.JSONEncoder.default(self, obj)

@@ -101,7 +101,6 @@ class update:
     log.loggit( 'update.POST()' )
 
     # Must be a matching user or administrator to update
-    # TODO need to deal with renaming accounts (look up old username via id)
     wputil.must_match_username_or_admin( web.input()['username'] )
 
     # Catch the cancel button
