@@ -27,12 +27,10 @@ fi
 case "$1" in
   purge)
     dbc_go webpy-example $@
-    rm -f /usr/share/webpy-example/lib/credentials* || true
   ;;
 
   remove|upgrade|failed-upgrade|abort-install|abort-upgrade|disappear)
     dbc_go webpy-example $@
-    rm -f /usr/share/webpy-example/lib/credentials* || true
   ;;
 
   *)
