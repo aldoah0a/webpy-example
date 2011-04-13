@@ -28,6 +28,7 @@ install: $(INSTALLFILES)
             install -D -m 0644 $$p ${DESTDIR}/usr/share/webpy-example/$$p ;\
           fi \
         done
+	install -D -m 0644 pgsql.sql ${DESTDIR}/usr/share/dbconfig-common/data/webpy-example/install/pgsql
 
 all:
 
