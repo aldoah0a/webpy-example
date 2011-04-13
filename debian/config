@@ -7,7 +7,14 @@ set -e
 
 if [ -f /usr/share/dbconfig-common/dpkg/config.pgsql ]; then
   . /usr/share/dbconfig-common/dpkg/config.pgsql
-  dbc_authmethod_user="password"
-  dbc_dbuser='www-data'
+  dbc_first_version="0.72"
+  dbc_dbuser="www-data"
+  dbc_dbtype="pgsql"
+  dbc_dbname="webpyexample"
+  dbc_dbpass=""
+  dbc_dbadmin="postgres"
+  dbc_dbadmpass=""
+  dbc_authmethod_admin="ident"
+  dbc_authmethod_user="ident"
   dbc_go webpy-example $@
 fi

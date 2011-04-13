@@ -1,16 +1,9 @@
-#! /bin/sh
-# postrm script for #PACKAGE#
+#!/bin/sh
+# postrm script for webpy-example
 #
 # see: dh_installdeb(1)
 
 set -e
-
-if [ -f /usr/share/debconf/confmodule ]; then
-  . /usr/share/debconf/confmodule
-fi
-if [ -f /usr/share/dbconfig-common/dpkg/postrm.pgsql  ]; then
-  . /usr/share/dbconfig-common/dpkg/postrm.pgsql
-fi
 
 # summary of how this script can be called:
 #        * <postrm> `remove'
@@ -23,6 +16,13 @@ fi
 #        * <disappearer's-postrm> `disappear' <r>overwrit>r> <new-version>
 # for details, see http://www.debian.org/doc/debian-policy/ or
 # the debian-policy package
+
+. /usr/share/debconf/confmodule
+
+# Source dbconfig-common functions
+if [ -f /usr/share/dbconfig-common/dpkg/postrm.pgsql  ]; then
+  . /usr/share/dbconfig-common/dpkg/postrm.pgsql
+fi
 
 case "$1" in
   purge)
