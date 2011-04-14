@@ -55,19 +55,16 @@ class rest_login:
 
     # Get the account credentials
     try:
-      acct = adb.login( wi['username'], wi['password'] )
+      result = adb.login( wi['username'], wi['password'] )
     except Exception, e:
       return { 'status' : 'error',
                'message' : 'An error occurred: %s' % e }
 
     # If we failed our login or the account doesn't exist.
-    if not acct:
+    if not result:
       return { 'status' : 'login_failure',
                'message' : 'Login failed',
                'session_id' : web.ctx.session['session_id'] }
-
-    web.ctx.session['username'] = acct['username'];
-    web.ctx.session['role']     = acct['role'];
 
     return { 'status' : 'login_success',
              'message' : 'Login successful',
@@ -118,18 +115,15 @@ class login:
 
     # Get the account credentials
     try:
-      acct = adb.login( f.d.username, f.d.password )
+      result = adb.login( f.d.username, f.d.password )
     except Exception, e:
       return { 'status' : 'error',
                'message' : 'An error occurred: %s' % e }
 
     # If it isn't an account...
-    if not acct:
+    if not result:
       return { 'status' : 'error',
                'message' : 'Login failed' }
-
-    web.ctx.session['username'] = acct['username'];
-    web.ctx.session['role']     = acct['role'];
 
     redir = '/'
     if f.d.backto != '':

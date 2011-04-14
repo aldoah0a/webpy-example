@@ -158,6 +158,10 @@ class AccountDB(object):
       return False
     if not pwd_context.verify( password, acct['password'] ):
       return False
-    return acct
+    # Stick the account information in our session
+    acct = wputil.clean_account( acct )
+    for key,values in acct.items():
+      web.ctx.session[ key ] = values
+    return True
 
 # End
