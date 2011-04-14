@@ -3,6 +3,7 @@
 import os
 import sys
 import web
+import time
 
 from credentials import Credentials
 
@@ -153,13 +154,21 @@ class AccountDB(object):
     @returns a single record from the database as a Storage object
     """
     log.loggit( 'AccountDB.login()' )
+    # Try to login
     acct = self.review_account( username )
     if not acct:
       return False
     if not pwd_context.verify( password, acct['password'] ):
       return False
-    # Stick the account information in our session
+
+    # Update the account information
     acct = wputil.clean_account( acct )
+    data = {}
+    data['last_ip'] = web.ctx.ip
+    data['last_login'] = str(int(time.time())) 
+    acct = self._set_account_info( acct, data )
+
+    # Put account information in session key 
     for key,values in acct.items():
       web.ctx.session[ key ] = values
     return True
