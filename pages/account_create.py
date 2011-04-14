@@ -83,18 +83,25 @@ class create:
                'message' : 'Verify all information has been provided correctly.',
                'form' : f }
 
+    # It isn't possible to modify the f.d Storage from the form, so we need to
+    # create a new hash
+    acct = {}
+    acct['username'] = f.d['username']
+    acct['password'] = f.d['password']
+    acct['role']     = f.d['role']
+
     # Adding blank default fields
-    f.d['last_ip']    = '',
-    f.d['last_login'] = '',
+    acct['last_ip']    = '',
+    acct['last_login'] = '',
 
     # Adding the consumer_key/consumer_secret to support oauth
-    f.d['consumer_key'] = ''.join( random.choice(string.letters) for i in xrange(32) )
-    f.d['consumer_secret'] = ''.join( random.choice(string.letters) for i in xrange(32) )
+    acct['consumer_key'] = ''.join( random.choice(string.letters) for i in xrange(32) )
+    acct['consumer_secret'] = ''.join( random.choice(string.letters) for i in xrange(32) )
 
     # Try to write the data to the database
     adb = accountdb.AccountDB();
     try:
-      account = adb.create_account( f.d )
+      account = adb.create_account( acct )
     except Exception, e:
       return { 'status' : 'error',
                'message' : 'An error occurred: %s' % e,

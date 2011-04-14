@@ -105,7 +105,10 @@ class update:
 
     # Catch the cancel button
     if  web.input().has_key('cancel'):
-      raise web.seeother('../')
+      if wputil.is_admin():
+        raise web.seeother('../')
+      else:
+        raise web.seeother('../../')
 
     # Validate the form
     if wputil.is_admin():

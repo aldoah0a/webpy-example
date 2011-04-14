@@ -11,9 +11,16 @@ $else:
   <p> 
     <b>Username:</b> $kwargs['account']['username']<br /> 
     <b>Role:</b> $kwargs['account']['role']<br />
+    <b>OAuth Consumer Key:</b> $kwargs['account']['consumer_key']<br />
+    <b>OAuth Consumer Secret:</b> $kwargs['account']['consumer_secret']<br />
   </p> 
   <p> 
+
+  $if kwargs['account']['role'] == 'administrator':
     [<a href="../">Back</a>]
+  $else:
+    [<a href="../../">Back</a>]
+
     [<a href="../update/$kwargs['account']['username']">Update Account Info</a>]
   </p> 
 
