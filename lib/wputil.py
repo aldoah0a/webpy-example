@@ -73,10 +73,6 @@ def clean_account( account ):
     return account
   if account.has_key('password'):
     del account['password']
-  if account.has_key('consumer_key'):
-    del account['consumer_key']
-  if account.has_key('consumer_secret'):
-    del account['consumer_secret']
   return account
 
 
