@@ -85,7 +85,7 @@ def validate_basic_auth():
     username, password = base64.decodestring( auth ).split(':')
 
   adb = accountdb.AccountDB()
-  account = adb.login( username, password )
+  account = adb.login( username, password, False )
   if account is None:
     raise web.unauthorized( UNAUTHORIZED_MESSAGE, UNAUTHORIZED_HEADERS )
 
