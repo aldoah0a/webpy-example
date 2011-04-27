@@ -48,7 +48,7 @@ def session_protect(target):
   def decorated_function( *args, **kwargs ):
     log.loggit( 'session_protect.decorated_function()' )
     if not web.ctx.session.has_key('username'):
-      raise web.seeother( '/login' + web.ctx.query, absolute=True )
+      raise web.seeother( '/login?backto=' + web.ctx.env.get('REQUEST_URI', '/'), absolute=True )
     return target( *args, **kwargs )
   return decorated_function
 
@@ -60,7 +60,7 @@ def session_admin_protect(target):
   def decorated_function( *args, **kwargs ):
     log.loggit( 'session_admin_protect.decorated_function()' )
     if not web.ctx.session.has_key('role') or web.ctx.session['role'] != 'administrator':
-      raise web.seeother( '/login' + web.ctx.query, absolute=True )
+      raise web.seeother( '/login?backto=' + web.ctx.env.get('REQUEST_URI', '/'), absolute=True )
     return target( *args, **kwargs )
   return decorated_function
 
@@ -127,13 +127,16 @@ def validate_two_leg_oauth():
   log.loggit( 'validate_two_leg_oauth()' )
   parameters = web.input()
   if web.ctx.env.has_key('HTTP_AUTHORIZATION') and web.ctx.env['HTTP_AUTHORIZATION'].startswith('OAuth '):
-    parameters.update( split_header( web.ctx.env['HTTP_AUTHORIZATION'] ) )
+    parameters = split_header( web.ctx.env['HTTP_AUTHORIZATION'] )
 
   # We have to reconstruct the original full URL used when signing
   # so if there are ever 401 errors verifying a request, look here first.
   req = oauth2.Request( web.ctx.env['REQUEST_METHOD'],
                         web.ctx['homedomain'] + web.ctx.env['REQUEST_URI'],
                         parameters = parameters )
+
+  if not req.has_key('oauth_consumer_key'):
+    raise web.unauthorized()
 
   # Verify the account referenced in the request is valid
   adb = accountdb.AccountDB()

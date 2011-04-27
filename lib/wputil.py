@@ -1,7 +1,10 @@
 #!/usr/bin/python
 
+import os
 import web
 import json
+import magic
+import tempfile
 
 class Log:
   """
@@ -106,5 +109,49 @@ class slashy:
   def GET(self):
     log.loggit( 'slashy.GET()' )
     raise web.seeother( '/' + web.ctx.query )
+
+def download_file( pathname ):
+  """
+  This function does a proper chunked transfer download.
+  To use, simply return the output of this function like this:
+
+    return download_file( filename )
+
+  """
+  log.loggit( 'download_file()' )
+
+  mime = magic.open(magic.MAGIC_MIME)
+  mime.load()
+
+  # Here is our chunked transfer encoding code
+  # See for more information: http://en.wikipedia.org/wiki/Chunked_transfer_encoding
+  #
+  # Note: Sending a Content-Length header with a chunked transfer encoding
+  # header really confuses curl and chrome (and others)
+  web.header('Content-Disposition', 'inline; filename=%s' % os.path.basename( pathname ) )
+  web.header('Content-Type', mime.file( pathname ) )
+  web.header('Transfer-Encoding','chunked')
+
+  f = open( pathname, 'rb')
+  while 1:
+    buf = f.read( 8192 )
+    if not buf:
+      break
+    # The chunks need to be prefixed with the size in hex, a \r\n, the data, then a \r\n again
+    yield str(hex(len(buf)))[2:] + '\r\n' + buf + '\r\n'
+  # The terminator is a 0 byte size with no payload followed by two \r\n
+  yield '0\r\n\r\n'
+
+
+def make_tempfile( file_handle ):
+  """
+  Make a proper tempfile with a file name out of the web.py fake tempfile
+  """
+  log.loggit( 'make_tempfile()' )
+  temp_file = tempfile.NamedTemporaryFile( delete=False )
+  temp_name = temp_file.name
+  temp_file.write( file_handle.read() )
+  temp_file.close()
+  return temp_name
 
 # End

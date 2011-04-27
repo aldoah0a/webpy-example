@@ -35,7 +35,7 @@ account_form = web.form.Form(
 # in this module because the index.py runs us as a subapplication.
 urls = (
   '',      wputil.slashy,
-  '/(.*)', 'create'
+  '/', 'create'
 )
 
 htmlout = web.template.render( 'templates/', base='layout' )
@@ -54,7 +54,7 @@ class create:
     override_input_key = 'format',
     html = render_html
   )
-  def GET( self, get_string ):
+  def GET( self ):
     log.loggit( 'create.GET()' )
 
     # Return the form
@@ -69,7 +69,7 @@ class create:
     override_input_key = 'format',
     html = render_html
   )
-  def POST( self, get_string ):
+  def POST( self ):
     log.loggit( 'create.POST()' )
 
     # Check to see if we are canceling out
@@ -83,8 +83,8 @@ class create:
                'message' : 'Verify all information has been provided correctly.',
                'form' : f }
 
-    # It isn't possible to modify the f.d Storage from the form, so we need to
-    # create a new hash
+    # We can't add to or modify the f.d Storage, so create a new dict to pass
+    # to create the account
     acct = {}
     acct['username'] = f.d['username']
     acct['password'] = f.d['password']

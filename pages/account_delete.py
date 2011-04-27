@@ -45,7 +45,7 @@ class delete:
     override_input_key = 'format',
     html = render_html
   )
-  def GET( self, get_string ):
+  def GET( self, get_string='' ):
     log.loggit( 'delete.GET()' )
 
     # Grab the username from the get string
@@ -75,7 +75,7 @@ class delete:
     override_input_key = 'format',
     html = render_html
   )
-  def POST( self, get_string ):
+  def POST( self, get_string='' ):
     log.loggit( 'delete.POST()' )
 
     # Catch the cancel button

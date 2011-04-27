@@ -64,7 +64,7 @@ class update:
     override_input_key = 'format',
     html = render_html
   )
-  def GET( self, get_string ):
+  def GET( self, get_string='' ):
     log.loggit( 'update.GET()' )
 
     # Grab the account id from the get string
@@ -97,7 +97,7 @@ class update:
     override_input_key = 'format',
     html = render_html
   )
-  def POST( self, get_string ):
+  def POST( self, get_string='' ):
     log.loggit( 'update.POST()' )
 
     # Must be a matching user or administrator to update

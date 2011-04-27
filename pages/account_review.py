@@ -36,7 +36,7 @@ class review:
     override_input_key = 'format',
     html = render_html
   )
-  def GET( self, get_string ):
+  def GET( self, get_string='' ):
     log.loggit( 'review.GET()' )
 
     # Grab the account username from URL
@@ -51,7 +51,6 @@ class review:
       return { 'status' : 'error',
                'message' : 'No such account exists: %s' % ( username ) }
 
-    print account
     return { 'status' : 'success',
              'message' : 'Review the account information.',
              'account' : wputil.clean_account( account ) }

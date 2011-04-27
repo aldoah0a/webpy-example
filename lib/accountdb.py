@@ -36,14 +36,19 @@ class AccountDB(object):
       pw   = Credentials.dbpassword
     )
 
+
   def _set_account_info( self, account, data ):
     """
-    @param acct is a result from the database
+    @param account is a result from accounts
+    @param data is the data for account_info
     @returns a dict of the account with its associated info
     """
     log.loggit( 'AccountDB._set_account_info()' )
     for key,val in data.iteritems():
       if key not in INFO_BLACKLIST:
+        result = self.db.delete( 'account_info',
+                                 where='username = $username and key = $key',
+                                 vars = { 'username' : account['username'], 'key' : key } )
         account[key] = val
         info = { 'username': account['username'],
                  'key': key,
@@ -51,9 +56,10 @@ class AccountDB(object):
         tmp_id = self.db.insert( 'account_info', **info )
     return account
 
+
   def _get_account_info( self, account ):
     """
-    @param acct is a result from the database
+    @param account is a result from the database
     @returns a dict of the account with its associated info
     """
     log.loggit( 'AccountDB._get_account_info()' )
@@ -66,6 +72,7 @@ class AccountDB(object):
       account[ info['key'] ] = info['value']
     return account
 
+
   def create_account( self, data ):
     """
     @param data is a Storage (or Dict)
@@ -77,6 +84,7 @@ class AccountDB(object):
     account['id'] = self.db.insert( 'accounts', **account )
     return self._set_account_info( account, data )
 
+
   def review_accounts( self ):
     """
     @returns a list of Storage elements from the database
@@ -87,6 +95,7 @@ class AccountDB(object):
     for a in res:
       accounts.append( self._get_account_info( a ) )
     return accounts
+
 
   def review_account( self, username ):
     """
@@ -130,9 +139,18 @@ class AccountDB(object):
     account = {}
     account['id'] = data['id']
     account['username'] = data['username']
-    # Leave password alone if it is not set from the form
-    if data['password']:
+    # Leave password alone if it is not set from the form or is already
+    # a valid password hash string
+    if data['password'] and not pwd_context.identify( data['password'] ):
       account['password'] = pwd_context.encrypt( data['password'] )
+    # If we rename the account, we need to update the account_info table
+    old_account = self.db.select( 'accounts', where = 'id = $id', vars = dict( id = data['id'] ) )[0]
+    if old_account['username'] != account['username']:
+      result = self.db.update( 'account_info',
+                               where='username = $username',
+                               vars = dict( username = old_account['username'] ),
+                               username = account['username'] )
+    # Update the accounts database and then update the extra info
     result = self.db.update( 'accounts', where='id = $id', vars = dict( id = account['id'] ), **account )
     return self._set_account_info( account, data )
 
@@ -147,7 +165,7 @@ class AccountDB(object):
     return True
 
 
-  def login( self, username, password ):
+  def login( self, username, password, session_login=True ):
     """
     @param username is the username of an account
     @param password is the password of an account
@@ -155,22 +173,25 @@ class AccountDB(object):
     """
     log.loggit( 'AccountDB.login()' )
     # Try to login
-    acct = self.review_account( username )
-    if not acct:
+    account = self.review_account( username )
+    if not account:
       return False
-    if not pwd_context.verify( password, acct['password'] ):
+    if not pwd_context.verify( password, account['password'] ):
       return False
 
-    # Update the account information
-    acct = wputil.clean_account( acct )
-    data = {}
-    data['last_ip'] = web.ctx.ip
-    data['last_login'] = str(int(time.time())) 
-    acct = self._set_account_info( acct, data )
+    account = wputil.clean_account( account )
+    if session_login:
+      # Update the account information
+      data = {}
+      data['last_ip'] = web.ctx.ip
+      data['last_login'] = str(int(time.time()))
+      account = self._set_account_info( account, data )
 
-    # Put account information in session key 
-    for key,values in acct.items():
-      web.ctx.session[ key ] = values
-    return True
+      # Put account information in session key
+      for key,value in account.items():
+        value = str(value)
+        web.ctx.session[ key ] = ( value[:50] + '...' ) if len(value) > 50 else value
+
+    return account
 
 # End
