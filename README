@@ -1,6 +1,6 @@
                              WEBPY-EXAMPLE
 
-This is an example of configuring webpy under Debian / Ubuntu. I wrote it
+This is an example of configuring webpy under Debian / Ubuntu. I wrote it while I was
 trying to figure out web.py and stubbed my toe so often that I hoped to help
 others out there avoid the problems I had. This app provides examples of the
 following things:
